@@ -11,7 +11,7 @@ function onOpen() {
       .addItem('Export Crunchylists', 'exportCrunchyLists')
       .addItem('Import Crunchylists', 'importCrunchyLists'))
     .addItem('Refresh Anime List', 'getAnimeList')
-    .addItem('Create Dashboard', 'createDashboard') /*23.02.2026*/
+    .addItem('Create Dashboard', 'createDashboard') 
     .addItem('Setup (Einmalig)', 'setupSpreadsheet')
     .addSubMenu(ui.createMenu('Debug')
       .addItem('History Spalten anzeigen', 'debugHistoryColumns')

@@ -80,13 +80,6 @@ function createDashboard() {
     }
   }
 
-
-  // Nach der for-Schleife, vor "Sortieren nach Datum"
-  console.log("Monatliche Daten:", JSON.stringify(monthlyCount));
-  console.log("Jährliche Daten:", JSON.stringify(yearlyCount));
-  console.log("Erster Rohwert:", historyData[0][dateColIndex]);
-  console.log("Typ:", typeof historyData[0][dateColIndex]);
-
   // Sortieren nach Datum
   var sortedMonths = Object.values(monthlyCount).sort((a, b) => a.key.localeCompare(b.key));
   var sortedYears = Object.keys(yearlyCount).sort();
@@ -245,6 +238,7 @@ function createDashboard() {
   row++;
 
   var animeStartRow = row;
+
   // Zeilen:
   sortedAnime.forEach(function ([title, data]) {
     var barLength = Math.round((data.count / maxAnimeCount) * 20);
@@ -262,6 +256,7 @@ function createDashboard() {
   });
 
   row += 2;
+
   // ---- GESAMT-STATISTIK ----
   var totalEpisodes = historyData.filter(r => r[dateColIndex]).length;
 
@@ -300,5 +295,5 @@ function createDashboard() {
   // Zum Dashboard navigieren
   ss.setActiveSheet(dashboard);
 
-  SpreadsheetApp.getUi().alert("✅ Dashboard wurde erstellt!");
+  SpreadsheetApp.getUi().alert("Dashboard wurde erstellt!");
 }
