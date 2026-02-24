@@ -30,17 +30,17 @@ function debugProfiles() {
     console.log("Account Info: " + JSON.stringify(meBody));
 
     if (meCode !== 200) {
-      message += "❌ Token ungültig (Code " + meCode + ")\n";
+      message += "Token ungültig (Code " + meCode + ")\n";
       message += "→ Neuen Token holen und sicherstellen dass er mit 'Bearer ' beginnt\n";
       SpreadsheetApp.getUi().alert(message);
       return;
     }
 
-    message += "✅ Token gültig\n";
+    message += "Token gültig\n";
     message += "Account ID: " + (meBody.account_id || "unbekannt") + "\n\n";
 
   } catch(e) {
-    message += "❌ Fehler beim Account-Abruf: " + e.message + "\n";
+    message += "Fehler beim Account-Abruf: " + e.message + "\n";
     SpreadsheetApp.getUi().alert(message);
     return;
   }
@@ -61,7 +61,7 @@ function debugProfiles() {
       if (profilesBody.profiles) profiles = profilesBody.profiles;
 
       if (!Array.isArray(profiles) || profiles.length === 0) {
-        message += "⚠ Keine Profile gefunden oder unbekanntes Format\n";
+        message += "Keine Profile gefunden oder unbekanntes Format\n";
         message += "Rohdaten: " + JSON.stringify(profilesBody).substring(0, 300) + "\n";
       } else {
         message += "Anzahl Profile: " + profiles.length + "\n\n";
@@ -83,12 +83,12 @@ function debugProfiles() {
       message += "→ Möglicherweise kein Multi-Profil Account\n";
       message += "→ Der Token ist trotzdem gültig für einen Account\n";
     } else {
-      message += "❌ Fehler " + profilesCode + "\n";
+      message += "Fehler " + profilesCode + "\n";
       message += "Antwort: " + profilesResponse.getContentText().substring(0, 300) + "\n";
     }
 
   } catch(e) {
-    message += "❌ Exception: " + e.message + "\n";
+    message += "Exception: " + e.message + "\n";
     console.log("Exception bei Profiles: " + e.message);
   }
 
@@ -103,7 +103,7 @@ function debugProfiles() {
     console.log("Active Profile: " + JSON.stringify(activeBody));
 
     if (activeCode === 200) {
-      message += "✅ Aktives Profil gefunden:\n";
+      message += "Aktives Profil gefunden:\n";
       message += "  Name:      " + (activeBody.profile_name || activeBody.username || activeBody.name || "unbekannt") + "\n";
       message += "  Profil ID: " + (activeBody.profile_id || activeBody.id || "unbekannt") + "\n";
       message += "\n⚠ Der Token ist immer an das Profil gebunden\n";
@@ -117,7 +117,7 @@ function debugProfiles() {
     }
 
   } catch(e) {
-    message += "❌ Exception: " + e.message + "\n";
+    message += "Exception: " + e.message + "\n";
     console.log("Exception bei Active Profile: " + e.message);
   }
 
@@ -167,9 +167,9 @@ function selectProfile() {
     if (profiles[chosenName]) {
       scriptProperties.setProperty("active_profile", chosenName);
       scriptProperties.setProperty("active_token", profiles[chosenName]);
-      ui.alert("✅ Profil '" + chosenName + "' ist jetzt aktiv!\n\nAlle Export/Import Funktionen nutzen ab jetzt dieses Profil automatisch.");
+      ui.alert("Profil '" + chosenName + "' ist jetzt aktiv!\n\nAlle Export/Import Funktionen nutzen ab jetzt dieses Profil automatisch.");
     } else {
-      ui.alert("❌ Profil '" + chosenName + "' nicht gefunden.");
+      ui.alert("Profil '" + chosenName + "' nicht gefunden.");
     }
   }
 }
@@ -204,7 +204,7 @@ function addProfile() {
   scriptProperties.setProperty("active_profile", nameResult);
   scriptProperties.setProperty("active_token", tokenResult);
 
-  ui.alert("✅ Profil '" + nameResult + "' gespeichert und aktiviert!\n\nDu kannst jetzt weitere Profile hinzufügen oder direkt exportieren.");
+  ui.alert("Profil '" + nameResult + "' gespeichert und aktiviert!\n\nDu kannst jetzt weitere Profile hinzufügen oder direkt exportieren.");
 }
 
 // ============================================================

@@ -11,12 +11,12 @@ function debugHistoryColumns() {
   const historySheet = ss.getSheetByName("History");
 
   if (!historySheet) {
-    SpreadsheetApp.getUi().alert("❌ Sheet 'History' nicht gefunden!\nBitte erst History exportieren.");
+    SpreadsheetApp.getUi().alert("Sheet 'History' nicht gefunden!\nBitte erst History exportieren.");
     return;
   }
 
   if (historySheet.getLastRow() < 2) {
-    SpreadsheetApp.getUi().alert("❌ History Sheet ist leer!\nBitte erst History exportieren.");
+    SpreadsheetApp.getUi().alert("History Sheet ist leer!\nBitte erst History exportieren.");
     return;
   }
 
@@ -31,8 +31,8 @@ function debugHistoryColumns() {
   console.log("Anzahl Zeilen (inkl. Header): " + historySheet.getLastRow());
   console.log("");
 
-  var message = "✅ History Sheet gefunden\n";
-  message += "📊 " + (historySheet.getLastRow() - 1) + " Einträge, " + columns.length + " Spalten\n\n";
+  var message = "History Sheet gefunden\n";
+  message +=  (historySheet.getLastRow() - 1) + " Einträge, " + columns.length + " Spalten\n\n";
   message += "Spaltenname → Beispielwert (Zeile 2)\n";
   message += "─────────────────────────────────────\n";
 
@@ -43,10 +43,10 @@ function debugHistoryColumns() {
     // Datum erkennen
     var hint = "";
     if (val instanceof Date) {
-      hint = " 📅 (Datum)";
+      hint = "(Datum)";
       val = val.toISOString();
     } else if (typeof val === "string" && val.match(/^\d{4}-\d{2}-\d{2}/)) {
-      hint = " 📅 (Datum-String)";
+      hint = "(Datum-String)";
     }
 
     console.log("[" + i + "] " + col + " → " + val + hint);
@@ -72,8 +72,8 @@ function debugHistoryColumns() {
   );
 
   message += "\n─────────────────────────────────────\n";
-  message += "🔍 Vorgeschlagene Datumsspalte: " + (dateSuggestion || "nicht gefunden") + "\n";
-  message += "🔍 Vorgeschlagene Titelspalte:  " + (titleSuggestion || "nicht gefunden") + "\n";
+  message += "Vorgeschlagene Datumsspalte: " + (dateSuggestion || "nicht gefunden") + "\n";
+  message += "Vorgeschlagene Titelspalte:  " + (titleSuggestion || "nicht gefunden") + "\n";
   message += "\n➡ Passe diese Zeilen in Dashboard.gs an:\n";
   message += 'const dateColIndex = historyColumns.indexOf("' + (dateSuggestion || "HIER EINTRAGEN") + '");\n';
   message += 'const titleColIndex = historyColumns.indexOf("' + (titleSuggestion || "HIER EINTRAGEN") + '");';
@@ -106,7 +106,7 @@ function debugToken() {
 
   var message = "=== TOKEN DEBUG ===\n\n";
   message += "Token Länge: " + token.length + "\n";
-  message += "Beginnt mit 'Bearer ': " + (token.startsWith("Bearer ") ? "✅ Ja" : "❌ Nein – füge 'Bearer ' davor ein!") + "\n\n";
+  message += "Beginnt mit 'Bearer ': " + (token.startsWith("Bearer ") ? "Ja" : "Nein – füge 'Bearer ' davor ein!") + "\n\n";
 
   // Test 1: Account Info
   message += "--- Test 1: Account Info ---\n";
@@ -119,15 +119,15 @@ function debugToken() {
     console.log("Account Response: " + JSON.stringify(body));
 
     if (code === 200) {
-      message += "✅ Token gültig!\n";
+      message += "Token gültig!\n";
       message += "Account ID: " + (body.account_id || "nicht gefunden") + "\n";
       message += "External ID: " + (body.external_id || "nicht gefunden") + "\n";
     } else {
-      message += "❌ Fehler " + code + "\n";
+      message += "Fehler " + code + "\n";
       message += "Antwort: " + JSON.stringify(body) + "\n";
     }
   } catch(e) {
-    message += "❌ Exception: " + e.message + "\n";
+    message += "Exception: " + e.message + "\n";
     console.log("Exception bei Account Info: " + e.message);
   }
 
@@ -143,13 +143,13 @@ function debugToken() {
     console.log("Watchlist API Status: " + wlCode);
 
     if (wlCode === 200) {
-      message += "✅ Watchlist API erreichbar\n";
+      message += "Watchlist API erreichbar\n";
     } else {
-      message += "❌ Fehler " + wlCode + "\n";
+      message += "Fehler " + wlCode + "\n";
       message += "Antwort: " + wlResponse.getContentText().substring(0, 200) + "\n";
     }
   } catch(e) {
-    message += "❌ Exception: " + e.message + "\n";
+    message += "Exception: " + e.message + "\n";
   }
 
   // Test 3: History API
@@ -164,13 +164,13 @@ function debugToken() {
     console.log("History API Status: " + histCode);
 
     if (histCode === 200) {
-      message += "✅ History API erreichbar\n";
+      message += "History API erreichbar\n";
     } else {
-      message += "❌ Fehler " + histCode + "\n";
+      message += "Fehler " + histCode + "\n";
       message += "Antwort: " + histResponse.getContentText().substring(0, 200) + "\n";
     }
   } catch(e) {
-    message += "❌ Exception: " + e.message + "\n";
+    message += "Exception: " + e.message + "\n";
   }
 
   SpreadsheetApp.getUi().alert(message);

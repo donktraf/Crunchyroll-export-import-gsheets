@@ -41,7 +41,7 @@ function setupSpreadsheet() {
     ];
 
     _setupSheet(watchListSheet, wlHeaders, ORANGE, WHITE, ORANGE_LIGHT, GRAY);
-    Logger.log("✅ Sheet 'Watch List' erstellt");
+    Logger.log("Sheet 'Watch List' erstellt");
   } else {
     Logger.log("⏭ Sheet 'Watch List' bereits vorhanden, übersprungen");
   }
@@ -63,9 +63,9 @@ function setupSpreadsheet() {
     ];
 
     _setupSheet(historySheet, histHeaders, ORANGE, WHITE, ORANGE_LIGHT, GRAY);
-    Logger.log("✅ Sheet 'History' erstellt");
+    Logger.log("Sheet 'History' erstellt");
   } else {
-    Logger.log("⏭ Sheet 'History' bereits vorhanden, übersprungen");
+    Logger.log("Sheet 'History' bereits vorhanden, übersprungen");
   }
 
   // ============================================================
@@ -82,9 +82,9 @@ function setupSpreadsheet() {
     ];
 
     _setupSheet(crunchylistSheet, clHeaders, ORANGE, WHITE, ORANGE_LIGHT, GRAY);
-    Logger.log("✅ Sheet 'Crunchylist' erstellt");
+    Logger.log("Sheet 'Crunchylist' erstellt");
   } else {
-    Logger.log("⏭ Sheet 'Crunchylist' bereits vorhanden, übersprungen");
+    Logger.log("Sheet 'Crunchylist' bereits vorhanden, übersprungen");
   }
 
   // ============================================================
@@ -101,9 +101,9 @@ function setupSpreadsheet() {
     // Filter aktivieren
     allAnimeSheet.getRange(1, 1, 1, aaHeaders.length).createFilter();
 
-    Logger.log("✅ Sheet 'All Anime' erstellt");
+    Logger.log("Sheet 'All Anime' erstellt");
   } else {
-    Logger.log("⏭ Sheet 'All Anime' bereits vorhanden, übersprungen");
+    Logger.log("Sheet 'All Anime' bereits vorhanden, übersprungen");
   }
 
   // ============================================================
@@ -121,9 +121,9 @@ function setupSpreadsheet() {
     columnsSheet.setColumnWidth(2, 300);
     columnsSheet.setColumnWidth(3, 120);
 
-    Logger.log("✅ Sheet 'Columns to Use' erstellt");
+    Logger.log("Sheet 'Columns to Use' erstellt");
   } else {
-    Logger.log("⏭ Sheet 'Columns to Use' bereits vorhanden, übersprungen");
+    Logger.log("Sheet 'Columns to Use' bereits vorhanden, übersprungen");
   }
 
   // ============================================================
@@ -138,9 +138,9 @@ function setupSpreadsheet() {
     dashboardSheet.getRange("A2").setValue("→ Crunchyroll → Dashboard erstellen (nach dem History Export)")
       .setFontColor(ORANGE);
 
-    Logger.log("✅ Sheet 'Dashboard' erstellt");
+    Logger.log("Sheet 'Dashboard' erstellt");
   } else {
-    Logger.log("⏭ Sheet 'Dashboard' bereits vorhanden, übersprungen");
+    Logger.log("Sheet 'Dashboard' bereits vorhanden, übersprungen");
   }
 
   // ============================================================
@@ -159,7 +159,7 @@ function setupSpreadsheet() {
   ss.setActiveSheet(ss.getSheetByName("Watch List"));
 
   ui.alert(
-    "✅ Setup abgeschlossen!",
+    "Setup abgeschlossen!",
     "Alle Sheets wurden erstellt.\n\n" +
     "Nächste Schritte:\n" +
     "1. Crunchyroll → Watch List → Export Watch List\n" +
