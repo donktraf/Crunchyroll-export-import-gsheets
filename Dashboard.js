@@ -127,6 +127,8 @@ function createDashboard() {
     .setHorizontalAlignment("center");
   row += 2;
 
+
+
   // ---- JAHRES-ZUSAMMENFASSUNG ----
   dashboard.getRange(row, 1, 1, 6).merge()
     .setValue("📅 Aktivität pro Jahr")
@@ -214,6 +216,52 @@ function createDashboard() {
 
   row += 2;
 
+  // ---- EPISODEN PRO ANIME ----
+  // Anime Episoden zählen
+  var durationColIndex = historyColumns.indexOf("Dauer (ms)");
+  var animeEpisodes = {}; // { title: { count, totalMs } }
+  for (let i = 0; i < historyData.length; i++) {
+    var animeTitle = historyData[i][titleColIndex] || "Unbekannt";
+    var durationMs = durationColIndex !== -1 ? (historyData[i][durationColIndex] || 0) : 0;
+    if (!animeEpisodes[animeTitle]) animeEpisodes[animeTitle] = { count: 0, totalMs: 0 };
+    animeEpisodes[animeTitle].count++;
+    animeEpisodes[animeTitle].totalMs += durationMs;
+  }
+  var sortedAnime = Object.entries(animeEpisodes).sort((a, b) => b[1] - a[1]);
+  var maxAnimeCount = sortedAnime.length > 0 ? sortedAnime[0][1] : 1;
+
+  dashboard.getRange(row, 1, 1, 6).merge()
+    .setValue("🎬 Episoden pro Anime")
+    .setBackground(COLOR_SECTION_BG)
+    .setFontColor(COLOR_SECTION_TEXT)
+    .setFontSize(13)
+    .setFontWeight("bold");
+  row++;
+
+  dashboard.getRange(row, 1).setValue("Anime").setFontWeight("bold").setBackground("#eeeeee");
+  dashboard.getRange(row, 2).setValue("Episoden").setFontWeight("bold").setBackground("#eeeeee");
+  dashboard.getRange(row, 3).setValue("Stunden (h)").setFontWeight("bold").setBackground("#eeeeee");
+  dashboard.getRange(row, 4, 1, 3).merge().setValue("Verlauf").setFontWeight("bold").setBackground("#eeeeee");
+  row++;
+
+  var animeStartRow = row;
+  // Zeilen:
+  sortedAnime.forEach(function ([title, data]) {
+    var barLength = Math.round((data.count / maxAnimeCount) * 20);
+    var bar = "█".repeat(barLength) + "░".repeat(20 - barLength);
+    var isAlt = (row - animeStartRow) % 2 === 0;
+    var bg = isAlt ? COLOR_ROW_ALT : "#FFFFFF";
+    var hours = durationColIndex !== -1 ? (Math.round((data.totalMs / 3600000) * 10) / 10) + " h" : "ca. " + (Math.round((data.count * 24) / 60 * 10) / 10) + " h";
+
+    dashboard.getRange(row, 1).setValue(title).setBackground(bg).setFontColor(COLOR_TEXT);
+    dashboard.getRange(row, 2).setValue(data.count).setBackground(bg).setFontColor(COLOR_TEXT).setHorizontalAlignment("center");
+    dashboard.getRange(row, 3).setValue(hours).setBackground(bg).setFontColor(COLOR_TEXT).setHorizontalAlignment("center");
+    dashboard.getRange(row, 4, 1, 3).merge().setValue(bar + "  " + data.count)
+      .setBackground(bg).setFontColor(COLOR_BAR).setFontFamily("Courier New");
+    row++;
+  });
+
+  row += 2;
   // ---- GESAMT-STATISTIK ----
   var totalEpisodes = historyData.filter(r => r[dateColIndex]).length;
 
@@ -227,6 +275,7 @@ function createDashboard() {
 
   var stats = [
     ["Gesamt Episoden geschaut", totalEpisodes],
+    ["Verschiedene Anime", sortedAnime.length],
     ["Aktive Monate", sortedMonths.length],
     ["Aktivstes Jahr", sortedYears.reduce((a, b) => yearlyCount[a] > yearlyCount[b] ? a : b) + " (" + Math.max(...Object.values(yearlyCount)) + " Episoden)"],
     ["Aktivster Monat", sortedMonths.reduce((a, b) => a.count > b.count ? a : b).label + " (" + Math.max(...sortedMonths.map(m => m.count)) + " Episoden)"],

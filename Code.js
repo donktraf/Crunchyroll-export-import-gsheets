@@ -12,15 +12,16 @@ function onOpen() {
       .addItem('Import Crunchylists', 'importCrunchyLists'))
     .addItem('Refresh Anime List', 'getAnimeList')
     .addItem('Create Dashboard', 'createDashboard') /*23.02.2026*/
-    .addItem('🔧 Setup (Einmalig)', 'setupSpreadsheet')
+    .addItem('Setup (Einmalig)', 'setupSpreadsheet')
     .addSubMenu(ui.createMenu('Debug')
       .addItem('History Spalten anzeigen', 'debugHistoryColumns')
       .addItem('Import Watchlist testen', 'debugImportWatchlist')
       .addItem('Import History testen', 'debugImportHistory')
       .addItem('Token testen', 'debugToken'))
     .addSubMenu(ui.createMenu('Profile')
-      .addItem('👤 Profile anzeigen', 'debugProfiles')
-      .addItem('👤 Profil auswählen / hinzufügen', 'selectProfile'))
+      .addItem('Profile anzeigen', 'debugProfiles')
+      .addItem('Profil auswählen / hinzufügen', 'selectProfile'))
+    .addItem('History herunterladen (.xlsx)', 'downloadHistory')
     .addToUi();
 }
 
@@ -234,7 +235,7 @@ function exportHistory() {
         currentobj = pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear()
           + " " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
       }
-      
+
       row.push(currentobj)
     }
     history.push(row);
@@ -559,6 +560,35 @@ function getAnimeList() {
     }
 
     rows.push([title, link, animeCode, audio.join(","), sub.join(",")]);
+  }
+
+  function downloadHistory() {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const historySheet = ss.getSheetByName("History");
+
+    if (!historySheet || historySheet.getLastRow() < 2) {
+      SpreadsheetApp.getUi().alert("History Sheet ist leer! Bitte erst History exportieren.");
+      return;
+    }
+
+    // Spreadsheet ID holen
+    const ssId = ss.getId();
+    const sheetId = historySheet.getSheetId();
+
+    // Download URL generieren
+    const url = `https://docs.google.com/spreadsheets/d/${ssId}/export?format=xlsx&gid=${sheetId}&filename=history_export`;
+
+    // Link im Browser öffnen
+    const html = HtmlService.createHtmlOutput(
+      `<html>
+      <body>
+        <p>Download startet gleich...</p>
+        <script>window.open('${url}'); google.script.host.close();</script>
+      </body>
+    </html>`
+    ).setWidth(300).setHeight(100);
+
+    SpreadsheetApp.getUi().showModalDialog(html, "History herunterladen");
   }
 
   // Clear previous data

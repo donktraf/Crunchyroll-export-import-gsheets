@@ -61,6 +61,7 @@ const WATCHLIST_COLUMNS = {
 
 const HISTORY_COLUMNS = {
   "Geschaut am": "date_played",
+  "Dauer (ms)": "panel.episode_metadata.duration_ms",
   "fully_watched": "fully_watched",
   "id": "id",
   "panel": "panel",
