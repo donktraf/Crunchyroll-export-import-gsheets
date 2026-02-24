@@ -192,7 +192,7 @@ function createDashboard() {
     var isAlt = (row - monthStartRow) % 2 === 0;
     var bg = isAlt ? COLOR_ROW_ALT : "#FFFFFF";
 
-    dashboard.getRange(row, 1).setValue(m.label).setBackground(bg).setFontColor(COLOR_TEXT);
+    dashboard.getRange(row, 1).setValue(m.label).setBackground(bg).setFontColor(COLOR_TEXT).setHorizontalAlignment("left");
     dashboard.getRange(row, 2).setValue(m.count).setBackground(bg).setFontColor(COLOR_TEXT).setHorizontalAlignment("center");
 
     if (titleColIndex !== -1) {
@@ -270,8 +270,6 @@ function createDashboard() {
 
   var stats = [
     ["Gesamt Episoden geschaut", totalEpisodes],
-    ["Verschiedene Anime", sortedAnime.length],
-    ["Aktive Monate", sortedMonths.length],
     ["Aktivstes Jahr", sortedYears.reduce((a, b) => yearlyCount[a] > yearlyCount[b] ? a : b) + " (" + Math.max(...Object.values(yearlyCount)) + " Episoden)"],
     ["Aktivster Monat", sortedMonths.reduce((a, b) => a.count > b.count ? a : b).label + " (" + Math.max(...sortedMonths.map(m => m.count)) + " Episoden)"],
     ["Ø Episoden pro Monat", (totalEpisodes / sortedMonths.length).toFixed(1)],
