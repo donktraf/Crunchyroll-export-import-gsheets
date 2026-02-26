@@ -4,7 +4,7 @@ A Spreadsheet + Google Apps Script to export/import your Watchlist, Crunchylists
 ![screenshot](Crunchyroll_Sheet.png)
 
 Spreadsheet with Google Apps Script:
-https://docs.google.com/spreadsheets/d/11heL3iyDJ4juT3SZf3lsbfxQ1M-Si6kqn0Q7-fxWqls/copy
+(https://docs.google.com/spreadsheets/d/11heL3iyDJ4juT3SZf3lsbfxQ1M-Si6kqn0Q7-fxWqls/copy)
 
 
 
